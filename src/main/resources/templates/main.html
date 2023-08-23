@@ -11,7 +11,7 @@
 </div>
 
 <script>
-    var stompClient = Stomp.client("ws://" + window.location.host + "/websocket");
+    var stompClient = Stomp.client("wss://" + window.location.host + "/websocket");
     stompClient.connect({}, function(frame) {
         stompClient.subscribe("/topic/messages", function(response) {
             var message = JSON.parse(response.body);
