@@ -16,6 +16,6 @@ public class WebSocketController {
 
     @GetMapping("/")
     public String getIndex() {
-        return "main"; // Return the name of your Thymeleaf template
+        return "main";
     }
 }
