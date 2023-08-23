@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>WebSocket App</title>
+    <script src="/webjars/sockjs-client/sockjs.min.js"></script>
+    <script src="/webjars/stomp-websocket/stomp.min.js"></script>
+</head>
+<body>
+<div>
+    <textarea id="sharedTextArea"></textarea>
+</div>
+
+<script>
+    var stompClient = Stomp.client("ws://" + window.location.host + "/websocket");
+    stompClient.connect({}, function(frame) {
+        stompClient.subscribe("/topic/messages", function(response) {
+            var message = JSON.parse(response.body);
+            document.getElementById("sharedTextArea").value = message;
+        });
+    });
+
+    document.getElementById("sharedTextArea").addEventListener("input", function() {
+        var message = this.value;
+        stompClient.send("/app/message", {}, message);
+    });
+</script>
+</body>
+</html>
